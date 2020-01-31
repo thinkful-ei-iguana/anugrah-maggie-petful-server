@@ -1,4 +1,4 @@
-const _Node = require('./node.js');
+const _Node = require('./node-constructor.js');
 
 class Queue {
   constructor() {
