@@ -30,5 +30,13 @@ class Queue {
 
     return node.value;
   }
+
+  display() {
+    let currNode = this.first;
+    while (currNode !== null) {
+      console.log(currNode.value);
+      currNode = currNode.next;
+    }
+  }
 }
 module.exports = Queue;

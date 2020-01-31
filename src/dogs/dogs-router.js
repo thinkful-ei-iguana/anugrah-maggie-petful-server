@@ -1,7 +1,7 @@
 const express = require('express');
 const DogsService = require('./dogs-service');
 
-const dogsRouter = express.Router;
+const dogsRouter = express.Router();
 
 dogsRouter
   .route('/')
@@ -15,3 +15,5 @@ dogsRouter
       .status(200)
       .send(DogsService.deleteDog());
   });
+
+module.exports = dogsRouter;

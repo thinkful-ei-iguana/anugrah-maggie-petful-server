@@ -4,7 +4,7 @@ const dogsRouter = require('./dogs/dogs-router');
 
 const app = express();
 
-const jsonParser = express.JSON();
+const jsonParser = express.json();
 
 app.route('/api').post(jsonParser, (req, res, next) => {
   res.send('hello world. -server');
