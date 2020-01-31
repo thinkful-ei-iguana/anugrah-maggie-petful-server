@@ -13,11 +13,9 @@ dogsRouter
       .json(allDogs);
   })
   .delete((req, res, next) => {
-    const { name } = req.body;
-    const dogToDelete = { name };
     return res
       .status(200)
-      .send(DogsService.deleteDog(dogToDelete));
+      .send(DogsService.deleteDog());
   });
 
 module.exports = dogsRouter;

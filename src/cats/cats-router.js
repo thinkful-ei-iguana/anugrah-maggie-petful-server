@@ -24,7 +24,6 @@ catsRouter
 
   // })
   .delete((req, res, next) => {
-    console.log('deleting cats');
     return res
       .status(200)
       .send(CatsService.deleteCat());
