@@ -10,8 +10,9 @@ const { CLIENT_ORIGIN } = require('./config');
 const app = express();
 const jsonParser = express.json();
 
+console.log('client origin is', CLIENT_ORIGIN);
 app.use(cors({
-  origin: (CLIENT_ORIGIN)
+  origin: CLIENT_ORIGIN
 }));
 
 const morganSetting = process.env.NODE_ENV === 'production' ? 'tiny' : 'common';
