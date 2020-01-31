@@ -1,7 +1,9 @@
 const express = require('express');
 const DogsService = require('./dogs-service');
 
-const dogsRouter = express.Router;
+const dogsRouter = express.Router();
+const jsonParser = express.json();
+
 
 dogsRouter
   .route('/')
@@ -11,7 +13,11 @@ dogsRouter
       .json(allDogs);
   })
   .delete((req, res, next) => {
+    const { name } = req.body;
+    const dogToDelete = { name };
     return res
       .status(200)
-      .send(DogsService.deleteDog());
+      .send(DogsService.deleteDog(dogToDelete));
   });
+
+module.exports = dogsRouter;
