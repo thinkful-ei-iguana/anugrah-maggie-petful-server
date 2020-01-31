@@ -24,12 +24,10 @@ catsRouter
 
   // })
   .delete((req, res, next) => {
-    const { name } = req.body;
-    const catToDelete = { name };
     console.log('deleting cats');
     return res
       .status(200)
-      .send(CatsService.deleteCat(catToDelete));
+      .send(CatsService.deleteCat());
   });
 
 module.exports = catsRouter;

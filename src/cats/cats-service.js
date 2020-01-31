@@ -66,9 +66,9 @@ const CatsService = {
   getCats() {
     return catQueue.display(catQueue);
   },
-  postCat() {
+  // postCat() {
 
-  },
+  // },
 };
 
 module.exports = CatsService;
