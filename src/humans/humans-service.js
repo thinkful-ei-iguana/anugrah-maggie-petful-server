@@ -31,7 +31,7 @@ humans.map((human) => {
 const HumansService = {
 
   getHumans() {
-    return humanQueue.display(humanQueue)
+    return humanQueue.display(humanQueue);
   },
   postHuman() {
 

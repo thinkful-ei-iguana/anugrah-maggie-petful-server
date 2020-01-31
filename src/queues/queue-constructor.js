@@ -2,8 +2,8 @@ const _Node = require('./node-constructor.js');
 
 class Queue {
   constructor() {
-    this.value = null;
-    this.next = null;
+    this.first = null;
+    this.last = null;
   }
   enqueue(data) {
     const node = new _Node(data);
@@ -31,12 +31,16 @@ class Queue {
     return node.value;
   }
 
-  display() {
-    let currNode = this.first;
+  display(queue) {
+    let currNode = queue.first;
+    let catArr = [];
+    console.log('this.first is', queue.first);
     while (currNode !== null) {
-      console.log(currNode.value);
+      console.log('value is', currNode.value);
+      catArr.push(currNode.value);
       currNode = currNode.next;
     }
+    return catArr;
   }
 }
 module.exports = Queue;

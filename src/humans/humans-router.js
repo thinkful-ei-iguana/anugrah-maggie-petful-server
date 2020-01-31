@@ -27,3 +27,5 @@ humansRouter
     let currentLineToAdopt = HumansService.postHuman(name);
     res.json()
   })
+
+module.exports = humansRouter;
