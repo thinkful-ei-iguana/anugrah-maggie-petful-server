@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const app = require('./app');
 
-const app = express();
 app.use(cors());
 
 // Catch-all 404
@@ -21,6 +21,6 @@ app.use(function (err, req, res, next) {
   });
 });
 
-app.listen(8080,()=>{
+app.listen(8080, () => {
   console.log('Serving on 8080');
 });
