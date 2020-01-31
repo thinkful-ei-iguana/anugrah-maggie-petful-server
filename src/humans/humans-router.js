@@ -22,9 +22,9 @@ humansRouter
   .route('/post')
   .post(jsonParser, (req, res) => {
     const { name } = req.body;
-    let newName = { name };
+    let newHuman = { name };
 
-    let currentLineToAdopt = HumansService.postHuman(name);
+    let currentLineToAdopt = HumansService.postHuman(newHuman);
     res.json()
   })
 
