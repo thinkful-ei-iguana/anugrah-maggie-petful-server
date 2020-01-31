@@ -9,8 +9,8 @@ catsRouter
   .route('/')
   .get((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'https://pawsibilities.now.sh');
-    console.log('getting cats', allCats);
     const allCats = CatsService.getCats();
+    console.log('getting cats', allCats);
     return res
       .json(allCats);
   })
