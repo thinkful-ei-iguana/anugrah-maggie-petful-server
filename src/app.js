@@ -13,7 +13,7 @@ const jsonParser = express.json();
 console.log('client origin is', CLIENT_ORIGIN);
 app.use(cors({
   // origin: CLIENT_ORIGIN
-  origin: 'https://pawsibilities-app.now.sh/'
+  origin: 'https://pawsibilities-app.now.sh'
 }));
 
 const morganSetting = process.env.NODE_ENV === 'production' ? 'tiny' : 'common';

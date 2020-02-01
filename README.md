@@ -1,9 +1,9 @@
 # Pawsibilities
 Petful assignment, built by Anugrah Lambogo and Maggie McClellan
 
-Cat and dog lovers, gather 'round! The newest member of your family can't wait to meet you. Join the queue of hopeful adopters, and when it's your turn, click on a dog or cat to select the pet you'd like to take home.
+Cat and dog lovers, gather 'round! The newest member of your family can't wait to meet you. Pawsibilities is a web app that allows users to adopt a cat or dog (*disclaimer: this is all virtual; no actual adoptions are available through this site!). Join the queue of hopeful adopters, and when it's your turn, click on a dog or cat to select the pet you'd like to take home.
 
-## Check Pawsibilities out for yourself!
+## Visit Pawsibilities
 [Live app](https://pawsibilities-app.now.sh/ "Pawsibilities")
 [GitHub repository (client)](https://github.com/thinkful-ei-iguana/anugrah-maggie-petful-client "Pawsibilities client repo")
 
