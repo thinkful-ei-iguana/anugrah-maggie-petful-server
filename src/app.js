@@ -29,7 +29,7 @@ app.use('/api/cats', catsRouter.getRouter());
 app.use('/api/dogs', dogsRouter.getRouter());
 app.use('/api/humans', humansRouter.getRouter());
 
-function adoptionLoop() {
+function adoptionLoopTick() {
 
   let promiseLoop = new Promise((resolve) => {
     console.log('running the loop');
@@ -42,13 +42,13 @@ function adoptionLoop() {
         // if person runs out of time
         // force person to end of the queue
         humansRouter.getService().deleteHuman();
-        promiseLoop = promiseLoop.then(promiseLoop);
+        promiseLoop = promiseLoop.then(adoptionLoopTick());
         resolve();
       }, 1500);
 
       let adoptedPet = () => {
         clearTimeout(adoptionTimeout);
-        promiseLoop = promiseLoop.then(promiseLoop);
+        promiseLoop = promiseLoop.then(adoptionLoopTick());
         resolve();
       };
       // if person makes pet selection
@@ -68,6 +68,6 @@ function adoptionLoop() {
 
   return promiseLoop;
 }
-adoptionLoop();
+adoptionLoopTick();
 
 module.exports = app;
