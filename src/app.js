@@ -33,8 +33,8 @@ app.get('/api/updateEvent', (req, res) => {
   setInterval(() => {
     res.write(`hello world ${Date.now()}\n`);
     // .write(JSON.stringify(humansRouter.getService().getQueue()));
-    res.end();
-    // res.flush();
+    // res.end();
+    res.flush();
   }, 2000);
 });
 
