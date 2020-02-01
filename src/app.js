@@ -21,7 +21,8 @@ app.use(cors({
 const morganSetting = process.env.NODE_ENV === 'production' ? 'tiny' : 'common';
 app.use(morgan(morganSetting));
 
-app.use(compression(), '/api/updateEvent', (req, res) => {
+app.use(compression())
+app.get('/api/updateEvent', (req, res) => {
   const headers = {
     'Content-Type': 'text/event-stream',
     'Connection': 'keep-alive',
