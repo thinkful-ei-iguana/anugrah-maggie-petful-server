@@ -5,8 +5,8 @@ let dogQueue = new Queue();
 
 let dogs = [
   {
-    imageURL: 'http://www.dogster.com/wp-content/uploads/2015/05/Cute%20dog%20listening%20to%20music%201_1.jpg',
-    imageDescription: 'A smiling golden-brown golden retreiver listening to music.',
+    imageURL: 'https://www.pawmygosh.com/wp-content/uploads/2016/06/dog-bubbles1.png',
+    imageDescription: 'A golden retreiver chasing and trying to eat bubbles.',
     name: 'Zeus',
     sex: 'Male',
     age: 3,

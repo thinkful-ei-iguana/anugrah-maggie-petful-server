@@ -6,7 +6,7 @@ let catQueue = new Queue();
 let cats = [
   {
     imageURL: 'https://cdn.theatlantic.com/static/mt/assets/science/cat_caviar.jpg',
-    imageDescription: 'Swanky confident orange cat in formalwear',
+    imageDescription: 'Swanky confident orange cat in formalwear.',
     name: 'Juniper',
     sex: 'Male',
     age: 5,
@@ -42,7 +42,7 @@ let cats = [
   },
   {
     imageURL: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiCzlHLJKr26CEObJqwo8Tv4uWIurtQV7ox_CJytmjr35zvmQS2g&s',
-    imageDescription: 'White cat stepping through photo frame',
+    imageDescription: 'White cat stepping through photo frame.',
     name: 'Doctor Cucumber',
     sex: 'Female',
     age: 3,

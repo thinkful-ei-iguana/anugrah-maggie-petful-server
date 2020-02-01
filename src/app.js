@@ -21,8 +21,17 @@ const morganSetting = process.env.NODE_ENV === 'production' ? 'tiny' : 'common';
 app.use(morgan(morganSetting));
 
 
-app.get('/', (req, res) => {
-  res.send('hey hey');
+app.use('/api/updateEvent', (req, res) => {
+  const headers = {
+    'content-type': 'text/event-stream',
+    'connection': 'keep-alive',
+    'cache-control': 'no-cache'
+  };
+  setTimeout(() => {
+    res
+      .writeHead(200, headers)
+      .write(`hello world ${Date.now()}`);
+  }, 2000);
 });
 
 app.use('/api/cats', catsRouter.getRouter());
