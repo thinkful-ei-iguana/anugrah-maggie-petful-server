@@ -32,6 +32,8 @@ app.use('/api/updateEvent', (req, res) => {
       .writeHead(200, headers);
     res
       .write(`hello world ${Date.now()}`);
+    req
+      .flush();
   }, 2000);
 });
 
