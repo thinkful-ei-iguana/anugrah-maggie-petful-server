@@ -27,7 +27,7 @@ app.use('/api/updateEvent', (req, res) => {
     'Connection': 'keep-alive',
     'Cache-Control': 'no-cache'
   };
-  setTimeout(() => {
+  setInterval(() => {
     res
       .writeHead(200, headers);
     res
