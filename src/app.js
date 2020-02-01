@@ -1,3 +1,4 @@
+const compression = require('compression');
 const express = require('express');
 const CatsRouter = require('./cats/cats-router');
 const DogsRouter = require('./dogs/dogs-router');
@@ -20,8 +21,7 @@ app.use(cors({
 const morganSetting = process.env.NODE_ENV === 'production' ? 'tiny' : 'common';
 app.use(morgan(morganSetting));
 
-
-app.use('/api/updateEvent', (req, res) => {
+app.use(compression(), '/api/updateEvent', (req, res) => {
   const headers = {
     'Content-Type': 'text/event-stream',
     'Connection': 'keep-alive',
