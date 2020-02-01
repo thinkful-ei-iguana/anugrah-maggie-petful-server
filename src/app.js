@@ -42,13 +42,11 @@ function adoptionLoopTick() {
         // if person runs out of time
         // force person to end of the queue
         humansRouter.getService().deleteHuman();
-        promiseLoop = promiseLoop.then(adoptionLoopTick());
         resolve();
       }, 5000);
 
       let adoptedPet = () => {
         clearTimeout(adoptionTimeout);
-        promiseLoop = promiseLoop.then(adoptionLoopTick());
         resolve();
       };
       // if person makes pet selection
@@ -64,7 +62,10 @@ function adoptionLoopTick() {
         adoptedPet();
       });
     }
-  });
+  })
+    .then(() => {
+      adoptionLoopTick();
+    });
 
   return promiseLoop;
 }
