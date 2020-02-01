@@ -31,9 +31,12 @@ app.get('/api/updateEvent', (req, res) => {
   res
     .writeHead(200, headers);
   setInterval(() => {
-    res.write(`data: hello world ${Date.now()}\n`);
-    // .write(JSON.stringify(humansRouter.getService().getQueue()));
-    // res.end();
+    res
+      // OMG OMG IT NEEDS:
+      // * 'data: ' to precede ANYTHING ELSE
+      // * '\n\n' needs to succeed EVERYTHING
+      //.write(`data: hello world ${Date.now()}\n\n`);
+      .write(`data: ${JSON.stringify(humansRouter.getService().getQueue())}\n\n`);
     res.flush();
   }, 2000);
 });
