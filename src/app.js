@@ -34,7 +34,7 @@ app.get('/api/updateEvent', (req, res) => {
     res.write(`hello world ${Date.now()}\n`);
     // .write(JSON.stringify(humansRouter.getService().getQueue()));
     res.end();
-    res.flush();
+    // res.flush();
   }, 2000);
 });
 
