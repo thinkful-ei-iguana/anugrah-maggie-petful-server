@@ -27,9 +27,9 @@ app.use('/api/updateEvent', (req, res) => {
     'Connection': 'keep-alive',
     'Cache-Control': 'no-cache'
   };
+  res
+    .writeHead(200, headers);
   setInterval(() => {
-    res
-      .writeHead(200, headers);
     res
       .write(`hello world ${Date.now()}`);
 
