@@ -1,13 +1,30 @@
 # Pawsibilities
-(Petful Assignment)
+Petful assignment, built by Anugrah Lambogo and Maggie McClellan
 
-Cat and dog lovers, gather 'round! The newest
-Now that all the core features of your app are in place, you should have a pretty good idea of how you would explain the app to a user. Do that! Add some copy to your client's dashboard that gives your app a name and explains what its purpose is and how to use it. You could even put this introductory content into its own component on the dashboard to make it easier to show and hide later.
+Cat and dog lovers, gather 'round! The newest member of your family can't wait to meet you. Join the queue of hopeful adopters, and when it's your turn, click on a dog or cat to select the pet you'd like to take home.
 
-Both repos in this project should have README.md files.
+## Check Pawsibilities out for yourself!
+[Live app](https://pawsibilities-app.now.sh/ "Pawsibilities")
+[GitHub repository (client)](https://github.com/thinkful-ei-iguana/anugrah-maggie-petful-client "Pawsibilities client repo")
 
-Put all your team members names on the README.md for both client and server
-The client's README should reflect the introduction present in your app, and link to the live app.
-Include screenshots if you can!
-The server's README should explain how other developers would consume (or use) your API, and provide example requests and responses.
-Both READMEs should also explain the tech stacks used in the repo, for the benefit of developers who might want to work on your project.
+## Technology used
+
+**Front-End:** *ReactJS | CSS*
+
+**Back-End:** *NodeJS | ExpressJS*
+
+**Testing:** *Mocha | Chai*
+
+## API Documentation
+
+| **HTTP Verb** | **Path**                           | **Used for**         |
+| --------- |:--------------------------------------:| --------------------:|
+| GET       | /cats | return all available cats     |
+| GET       | /dogs  | return all available dogs    |
+| GET       | /humans  | return all humans in line to adopt    |
+| DELETE  | /cats   | remove dog from front of line (adds same dog to the back of the line) |
+| DELETE | /dogs | remove dog from front of line (adds same dog to the back of the line) |
+| DELETE | /humans | remove human from the front of the line (adds to the back of line)|
+| POST | /humans  | adds user to the back of the line  |
+
+
