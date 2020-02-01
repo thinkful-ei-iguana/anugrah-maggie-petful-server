@@ -42,6 +42,7 @@ function adoptionLoop() {
         // if person runs out of time
         // force person to end of the queue
         humansRouter.getService().deleteHuman();
+        promiseLoop = promiseLoop.then(promiseLoop);
         resolve();
       }, 1500);
 
