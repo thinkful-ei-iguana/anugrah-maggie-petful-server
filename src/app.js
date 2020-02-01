@@ -23,13 +23,14 @@ app.use(morgan(morganSetting));
 
 app.use('/api/updateEvent', (req, res) => {
   const headers = {
-    'content-type': 'text/event-stream',
-    'connection': 'keep-alive',
-    'cache-control': 'no-cache'
+    'Content-Type': 'text/event-stream',
+    'Connection': 'keep-alive',
+    'Cache-Control': 'no-cache'
   };
   setTimeout(() => {
     res
-      .writeHead(200, headers)
+      .writeHead(200, headers);
+    res
       .write(`hello world ${Date.now()}`);
   }, 2000);
 });
