@@ -33,8 +33,9 @@ const HumansService = {
   getHumans() {
     return humanQueue.display(humanQueue);
   },
-  postHuman() {
-
+  postHuman(newHuman) {
+    humanQueue.enqueue(newHuman);
+    return humanQueue.display(humanQueue);
   },
   deleteHuman() {
     humanQueue.dequeue();

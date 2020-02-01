@@ -23,9 +23,12 @@ humansRouter
   .post(jsonParser, (req, res) => {
     const { name } = req.body;
     let newHuman = { name };
+    console.log('newhuman is', newHuman);
 
     let currentLineToAdopt = HumansService.postHuman(newHuman);
-    res.json()
-  })
+    res
+      .status(200)
+      .json(currentLineToAdopt);
+  });
 
 module.exports = humansRouter;
