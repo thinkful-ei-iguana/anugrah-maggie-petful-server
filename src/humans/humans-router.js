@@ -16,10 +16,7 @@ humansRouter
     res
       .status(200)
       .send(HumansService.deleteHuman());
-  });
-
-humansRouter
-  .route('/post')
+  })
   .post(jsonParser, (req, res) => {
     const { name } = req.body;
     let newHuman = { name };
