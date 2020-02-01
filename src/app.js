@@ -31,7 +31,8 @@ app.use('/api/updateEvent', (req, res) => {
     .writeHead(200, headers);
   setInterval(() => {
     res
-      .write(JSON.stringify(humansRouter.getService().getQueue()));
+      // .write(JSON.stringify(humansRouter.getService().getQueue()));
+      .write(`hello world ${Date.now()}`);
     res
       .flush();
   }, 2000);
