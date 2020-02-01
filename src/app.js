@@ -32,19 +32,19 @@ app.use('/api/humans', humansRouter.getRouter());
 function adoptionLoopTick() {
 
   let promiseLoop = new Promise((resolve) => {
-    console.log('running the loop');
+    console.log('LOOP TICK: running the loop');
     // while there are people in the queue
     if (humansRouter.getService().getQueue().length > 0) {
-      console.log('found people in queue', humansRouter.getService().getQueue().length);
+      console.log('LOOP TICK: found people in queue', humansRouter.getService().getQueue().length);
       // wait for person to make a pet selection
       let adoptionTimeout = setTimeout(() => {
-        console.log('adoption timeout');
+        console.log('LOOP TICK: adoption timeout');
         // if person runs out of time
         // force person to end of the queue
         humansRouter.getService().deleteHuman();
         promiseLoop = promiseLoop.then(adoptionLoopTick());
         resolve();
-      }, 1500);
+      }, 5000);
 
       let adoptedPet = () => {
         clearTimeout(adoptionTimeout);
@@ -55,12 +55,12 @@ function adoptionLoopTick() {
       // dequeue pet, dequeue human
       // re-enqueue pet, re-enqueue human
       catsRouter.listenForAdoption(() => {
-        console.log('user adopted cat');
+        console.log('LOOP TICK: user adopted cat');
         adoptedPet();
       });
 
       dogsRouter.listenForAdoption(() => {
-        console.log('user adopted dog');
+        console.log('LOOP TICK: user adopted dog');
         adoptedPet();
       });
     }
