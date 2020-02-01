@@ -34,9 +34,7 @@ class Queue {
   display() {
     let currNode = this.first;
     let catArr = [];
-    console.log('this.first is', this.first);
     while (currNode !== null) {
-      console.log('value is', currNode.value);
       catArr.push(currNode.value);
       currNode = currNode.next;
     }
