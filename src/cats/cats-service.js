@@ -53,7 +53,7 @@ let cats = [
 cats.map((cat) => {
   catQueue.enqueue(cat);
 });
-console.log('cats is h', catQueue);
+// console.log('cats is h', catQueue);
 
 const CatsService = {
 

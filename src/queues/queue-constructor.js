@@ -31,10 +31,10 @@ class Queue {
     return node.value;
   }
 
-  display(queue) {
-    let currNode = queue.first;
+  display() {
+    let currNode = this.first;
     let catArr = [];
-    console.log('this.first is', queue.first);
+    console.log('this.first is', this.first);
     while (currNode !== null) {
       console.log('value is', currNode.value);
       catArr.push(currNode.value);

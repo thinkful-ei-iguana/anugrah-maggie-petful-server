@@ -1,45 +1,46 @@
 const Queue = require('../queues/queue-constructor');
 
-let humanQueue = new Queue();
 
-let humans = [
-  {
-    name: 'John'
-  },
-  {
-    name: 'Tauhida'
-  },
-  {
-    name: 'Maggie'
-  },
-  {
-    name: 'Anugrah'
-  },
-  {
-    name: 'Nicki'
-  },
-  {
-    name: 'Megan'
+class HumansService {
+  constructor() {
+    this.humanQueue = new Queue();
+
+    let humans = [
+      {
+        name: 'Tauhida'
+      },
+      {
+        name: 'Maggie'
+      },
+      {
+        name: 'Anugrah'
+      }
+
+    ];
+
+
+    humans.map((human) => {
+      this.humanQueue.enqueue(human);
+    });
   }
-];
-
-
-humans.map((human) => {
-  humanQueue.enqueue(human);
-})
-
-const HumansService = {
 
   getHumans() {
-    return humanQueue.display(humanQueue);
-  },
+    return this.humanQueue.display();
+  }
+
   postHuman(newHuman) {
-    humanQueue.enqueue(newHuman);
-    return humanQueue.display(humanQueue);
-  },
+    this.humanQueue.enqueue(newHuman);
+    return this.humanQueue.display();
+  }
+
   deleteHuman() {
-    humanQueue.dequeue();
-    return humanQueue.display(humanQueue);
+    let currentAdopter = this.humanQueue.dequeue();
+    this.humanQueue.enqueue(currentAdopter);
+    return this.humanQueue.display();
+  }
+
+  getQueue() {
+    return this.humanQueue.display();
   }
 }
 
