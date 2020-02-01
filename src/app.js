@@ -21,7 +21,7 @@ app.use(cors({
 const morganSetting = process.env.NODE_ENV === 'production' ? 'tiny' : 'common';
 app.use(morgan(morganSetting));
 
-app.use(compression())
+app.use(compression());
 app.get('/api/updateEvent', (req, res) => {
   const headers = {
     'Content-Type': 'text/event-stream',
@@ -31,11 +31,9 @@ app.get('/api/updateEvent', (req, res) => {
   res
     .writeHead(200, headers);
   setInterval(() => {
-    res
-      // .write(JSON.stringify(humansRouter.getService().getQueue()));
-      .write(`hello world ${Date.now()}`);
-    res
-      .flush();
+    res.write(`hello world ${Date.now()}`);
+    // .write(JSON.stringify(humansRouter.getService().getQueue()));
+    res.flush();
   }, 2000);
 });
 
