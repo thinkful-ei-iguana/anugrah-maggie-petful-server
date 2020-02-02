@@ -30,12 +30,12 @@ app.use(session({
 }));
 app.get('/api/updateEvent', (req, res) => {
   let ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
-  // console.log('got request from: ', req.connection.remoteAddress, req.connection.remotePort);
+  console.log('got request from: ', req.session.id);
   if (listOfClients.has(ip)) {
     console.log('already have client');
   }
   else {
-    console.log('adding new client', req.session.id);
+    console.log('adding new client');
     const headers = {
       'Content-Type': 'text/event-stream',
       'Connection': 'keep-alive',
