@@ -75,7 +75,7 @@ function adoptionLoopTick() {
         let isItYourTurn = false;
         // console.log('here is', humansRouter.getService().getQueue()[0].ip);
         console.log('reqclient is', reqClient);
-        if (humansRouter.getService().getQueue().length > 0 &&
+        if (humansRouter.getService().getQueue().display().length > 0 &&
           reqClient === humansRouter.getService().getQueue()[0].ip) {
           isItYourTurn = true;
         }
