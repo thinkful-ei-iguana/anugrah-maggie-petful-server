@@ -26,6 +26,7 @@ let eventId = 0;
 app.use(compression());
 app.get('/api/updateEvent', (req, res) => {
   let ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
+  console.log("got request from: ", req.connection.remoteAddress, req.connection.remotePort);
   if (listOfClients.has(ip)) {
     console.log('already have client');
   }
