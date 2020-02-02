@@ -21,7 +21,7 @@ class HumansRouter {
       })
       .post(jsonParser, (req, res) => {
         const { name } = req.body;
-        let ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
+        let ip = req.ip; //req.header('x-forwarded-for') || req.connection.remoteAddress;
         let newHuman = {
           name: name,
           ip: ip
