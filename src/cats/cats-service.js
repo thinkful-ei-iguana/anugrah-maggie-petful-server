@@ -59,9 +59,7 @@ const CatsService = {
 
   deleteCat() {
     let adoptedCat = catQueue.dequeue();
-    catQueue.enqueue(adoptedCat);
-    return catQueue.display(catQueue);
-
+    return adoptedCat;
   },
   getCats() {
     return catQueue.display(catQueue);

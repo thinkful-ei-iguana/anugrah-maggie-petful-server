@@ -7,13 +7,16 @@ class HumansService {
 
     let humans = [
       {
-        name: 'Tauhida'
+        name: 'Tauhida',
+        ip: null
       },
       {
-        name: 'Maggie'
+        name: 'Maggie',
+        ip: null
       },
       {
-        name: 'Anugrah'
+        name: 'Anugrah',
+        ip: null
       }
 
     ];
@@ -30,13 +33,14 @@ class HumansService {
 
   postHuman(newHuman) {
     this.humanQueue.enqueue(newHuman);
-    return this.humanQueue.display();
+    return this.humanQueue.display().map(human => {
+      return human.name;
+    });
   }
 
   deleteHuman() {
     let currentAdopter = this.humanQueue.dequeue();
-    this.humanQueue.enqueue(currentAdopter);
-    return this.humanQueue.display();
+    return currentAdopter;
   }
 
   getQueue() {

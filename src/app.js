@@ -21,24 +21,38 @@ app.use(cors({
 const morganSetting = process.env.NODE_ENV === 'production' ? 'tiny' : 'common';
 app.use(morgan(morganSetting));
 
+let listOfClients = new Map();
+
 app.use(compression());
 app.get('/api/updateEvent', (req, res) => {
-  const headers = {
-    'Content-Type': 'text/event-stream',
-    'Connection': 'keep-alive',
-    'Cache-Control': 'no-cache'
-  };
-  res
-    .writeHead(200, headers);
-  setInterval(() => {
+  if (listOfClients.has(req.ip)) {
+    console.log('already have client');
+  }
+  else {
+    console.log('adding new client');
+    const headers = {
+      'Content-Type': 'text/event-stream',
+      'Connection': 'keep-alive',
+      'Cache-Control': 'no-cache'
+    };
     res
-      // OMG OMG IT NEEDS:
-      // * 'data: ' to precede ANYTHING ELSE
-      // * '\n\n' needs to succeed EVERYTHING
-      //.write(`data: hello world ${Date.now()}\n\n`);
-      .write(`data: ${JSON.stringify(humansRouter.getService().getQueue())}\n\n`);
+      .writeHead(200, headers);
+    res.write(`data: ${JSON.stringify({
+      humans: humansRouter.getService().getQueue().map(human => human.name),
+      isItYourTurn: false
+    })}\n\n`);
     res.flush();
-  }, 2000);
+    listOfClients.set(req.ip, res);
+  }
+  // setInterval(() => {
+  //   res
+  //     // OMG OMG IT NEEDS:
+  //     // * 'data: ' to precede ANYTHING ELSE
+  //     // * '\n\n' needs to succeed EVERYTHING
+  //     //.write(`data: hello world ${Date.now()}\n\n`);
+  //     .write(`data: ${JSON.stringify(humansRouter.getService().getQueue())}\n\n`);
+  //   res.flush();
+  // }, 2000);
 });
 
 app.use('/api/cats', catsRouter.getRouter());
@@ -49,35 +63,56 @@ function adoptionLoopTick() {
 
   let promiseLoop = new Promise((resolve) => {
     console.log('* LOOP TICK: running the loop');
-    // while there are people in the queue
-    if (humansRouter.getService().getQueue().length > 0) {
-      console.log('** LOOP TICK: found people in queue', humansRouter.getService().getQueue().length);
-      // wait for person to make a pet selection
-      let adoptionTimeout = setTimeout(() => {
-        console.log('*** LOOP TICK: adoption timeout');
-        // if person runs out of time
-        // force person to end of the queue
-        humansRouter.getService().deleteHuman();
-        resolve();
-      }, 5000);
+    console.log('** LOOP TICK: found people in queue', humansRouter.getService().getQueue().length);
 
-      let adoptedPet = () => {
-        clearTimeout(adoptionTimeout);
-        resolve();
-      };
-      // if person makes pet selection
-      // dequeue pet, dequeue human
-      // re-enqueue pet, re-enqueue human
-      catsRouter.listenForAdoption(() => {
-        console.log('*** LOOP TICK: user adopted cat');
-        adoptedPet();
-      });
+    let replyToClients = () => {
+      console.log('list of clients:', listOfClients.size);
+      for (let element of listOfClients.entries()) {
+        let reqClient = element[0];
+        let response = element[1];
+        let isItYourTurn = false;
+        // console.log('here is', humansRouter.getService().getQueue()[0].ip);
+        // console.log('reqclient is', reqClient);
+        if (humansRouter.getService().getQueue().length > 0 &&
+          reqClient === humansRouter.getService().getQueue()[0].ip) {
+          isItYourTurn = true;
+        }
+        // console.log('reply to client', humansRouter.getService().getQueue());
 
-      dogsRouter.listenForAdoption(() => {
-        console.log('*** LOOP TICK: user adopted dog');
-        adoptedPet();
-      });
-    }
+        response.write(`data: ${JSON.stringify({
+          humans: humansRouter.getService().getQueue().map(human => human.name),
+          isItYourTurn: isItYourTurn
+        })}\n\n`);
+        response.flush();
+      }
+      resolve();
+    };
+
+    // wait for person to make a pet selection
+    let adoptionTimeout = setTimeout(() => {
+      console.log('*** LOOP TICK: adoption timeout');
+      // if person runs out of time
+      // force person to end of the queue
+      humansRouter.getService().deleteHuman();
+      replyToClients();
+    }, 15000);
+
+    let adoptedPet = () => {
+      clearTimeout(adoptionTimeout);
+      replyToClients();
+    };
+    // if person makes pet selection
+    // dequeue pet, dequeue human
+    // re-enqueue pet, re-enqueue human
+    catsRouter.listenForAdoption(() => {
+      console.log('*** LOOP TICK: user adopted cat');
+      adoptedPet();
+    });
+
+    dogsRouter.listenForAdoption(() => {
+      console.log('*** LOOP TICK: user adopted dog');
+      adoptedPet();
+    });
   })
     .then(() => {
       adoptionLoopTick();

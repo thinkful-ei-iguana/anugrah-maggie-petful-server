@@ -21,10 +21,14 @@ class HumansRouter {
       })
       .post(jsonParser, (req, res) => {
         const { name } = req.body;
-        let newHuman = { name };
-        console.log('newhuman is', newHuman);
+        let newHuman = {
+          name: name,
+          ip: req.ip
+        };
+        console.log('newhuman is', newHuman.name);
 
         let currentLineToAdopt = this.humansService.postHuman(newHuman);
+        console.log('current line to adopt', currentLineToAdopt);
         res
           .status(200)
           .json(currentLineToAdopt);
