@@ -33,6 +33,7 @@ app.get('/api/updateEvent', (req, res) => {
   let ip = req.ip;
   console.log('got request from: ', req.session.id);
   req.connection.on('close', () => {
+    console.log("closing connection for", ip)
     listOfClients.delete(ip);
   });
   if (listOfClients.has(ip)) {
