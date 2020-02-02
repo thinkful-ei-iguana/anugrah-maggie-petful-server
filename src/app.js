@@ -29,7 +29,7 @@ app.get('/api/updateEvent', (req, res) => {
     console.log('already have client');
   }
   else {
-    console.log('adding new client');
+    console.log('adding new client', req.ip);
     const headers = {
       'Content-Type': 'text/event-stream',
       'Connection': 'keep-alive',
