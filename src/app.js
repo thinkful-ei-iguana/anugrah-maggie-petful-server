@@ -51,7 +51,10 @@ app.get('/api/updateEvent', (req, res) => {
       isItYourTurn: false
     })}\n\n`);
     res.flush();
-    listOfClients.set(ip, res);
+    listOfClients.set(ip, {
+      res: res,
+      req: req
+    });
   }
   // setInterval(() => {
   //   res
@@ -82,14 +85,15 @@ function adoptionLoopTick() {
       // console.log('list of clients:', listOfClients.size);
       console.log(dogsRouter.getService().getDogs()[0].name);
       for (let element of listOfClients.entries()) {
-        let reqClient = element[0];
-        let response = element[1];
+        let reqIp = element[0];
+        let resAndReq = element[1];
+        let response = resAndReq.res;
         let isItYourTurn = false;
         let currentAdopter = humansRouter.getService().getHumans()[0].name;
         // console.log('here is', humansRouter.getService().getQueue()[0].ip);
         // console.log('reqclient is', reqClient);
         if (humansRouter.getService().getQueue().length > 0 &&
-          reqClient === humansRouter.getService().getQueue()[0].ip) {
+          reqIp === humansRouter.getService().getQueue()[0].ip) {
           isItYourTurn = true;
         }
         // console.log('reply to client', humansRouter.getService().getQueue());
