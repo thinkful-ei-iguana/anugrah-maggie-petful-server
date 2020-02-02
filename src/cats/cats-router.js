@@ -26,6 +26,9 @@ class CatsRouter {
 
       // })
       .delete((req, res, next) => {
+        if (this.adoptionCallback) {
+          this.adoptionCallback();
+        }
         return res
           .status(200)
           .send(CatsService.deleteCat());

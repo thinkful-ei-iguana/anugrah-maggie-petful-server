@@ -16,6 +16,9 @@ class DogsRouter {
           .json(allDogs);
       })
       .delete((req, res, next) => {
+        if (this.adoptionCallback) {
+          this.adoptionCallback();
+        }
         return res
           .status(200)
           .send(this.dogsService.deleteDog());
