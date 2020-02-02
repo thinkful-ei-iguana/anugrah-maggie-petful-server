@@ -25,11 +25,12 @@ let listOfClients = new Map();
 let eventId = 0;
 app.use(compression());
 app.get('/api/updateEvent', (req, res) => {
-  if (listOfClients.has(req.ip)) {
+  let ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
+  if (listOfClients.has(ip)) {
     console.log('already have client');
   }
   else {
-    console.log('adding new client', req.ip);
+    console.log('adding new client', ip);
     const headers = {
       'Content-Type': 'text/event-stream',
       'Connection': 'keep-alive',
@@ -42,7 +43,7 @@ app.get('/api/updateEvent', (req, res) => {
       isItYourTurn: false
     })}\n\n`);
     res.flush();
-    listOfClients.set(req.ip, res);
+    listOfClients.set(ip, res);
   }
   // setInterval(() => {
   //   res
