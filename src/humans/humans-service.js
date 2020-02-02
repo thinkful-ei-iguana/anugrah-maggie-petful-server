@@ -40,6 +40,10 @@ class HumansService {
 
   deleteHuman() {
     let currentAdopter = this.humanQueue.dequeue();
+    if (currentAdopter.ip === null) {
+      // adding dummy users back into the queue to continue to have a line of people
+      this.humanQueue.enqueue(currentAdopter);
+    }
     return currentAdopter;
   }
 
