@@ -28,12 +28,12 @@ class CatsRouter {
       .delete((req, res, next) => {
         return res
           .status(200)
-          .send(CatsService.deleteCat())
-          .then(() => {
-            if (this.adoptionCallback) {
-              this.adoptionCallback();
-            }
-          });
+          .send(CatsService.deleteCat());
+        // .then(() => {
+        //   if (this.adoptionCallback) {
+        //     this.adoptionCallback();
+        //   }
+        // });
       });
   }
 
