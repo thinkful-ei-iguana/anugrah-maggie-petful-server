@@ -4,13 +4,14 @@ const DogsService = require('./dogs-service');
 
 class DogsRouter {
   constructor() {
+    this.dogsService = new DogsService();
     this.dogsRouter = express.Router();
     this.jsonParser = express.json();
 
     this.dogsRouter
       .route('/')
       .get((req, res) => {
-        const allDogs = DogsService.getDogs();
+        const allDogs = this.dogsService.getDogs();
         return res
           .json(allDogs);
       })
@@ -38,6 +39,10 @@ class DogsRouter {
 
   getRouter() {
     return this.dogsRouter;
+  }
+
+  getService() {
+    return this.dogsService;
   }
 
   listenForAdoption(cb) {
