@@ -66,6 +66,7 @@ function adoptionLoopTick() {
     console.log('** LOOP TICK: found people in queue', humansRouter.getService().getQueue().length);
 
     let replyToClients = () => {
+      // for (let [reqClient, response] of Object.entries(listOfClients)) {
       console.log('list of clients:', listOfClients.size);
       for (let element of listOfClients.entries()) {
         let reqClient = element[0];
@@ -85,6 +86,7 @@ function adoptionLoopTick() {
         })}\n\n`);
         response.flush();
       }
+
       resolve();
     };
 
@@ -95,7 +97,7 @@ function adoptionLoopTick() {
       // force person to end of the queue
       humansRouter.getService().deleteHuman();
       replyToClients();
-    }, 15000);
+    }, 5000);
 
     let adoptedPet = () => {
       clearTimeout(adoptionTimeout);

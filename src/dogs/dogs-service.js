@@ -58,6 +58,7 @@ const DogsService = {
 
   deleteDog() {
     let adoptedDog = dogQueue.dequeue();
+    dogQueue.enqueue(adoptedDog);
     return adoptedDog;
   },
   getDogs() {

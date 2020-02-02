@@ -18,11 +18,11 @@ class DogsRouter {
         return res
           .status(200)
           .send(DogsService.deleteDog())
-          .then(() => {
-            if (this.adoptionCallback) {
-              this.adoptionCallback();
-            }
-          });
+        // .then(() => {
+        //   if (this.adoptionCallback) {
+        //     this.adoptionCallback();
+        //   }
+        // });
       });
     // .post(jsonParser, (req, res, next) => {
     //   const { imageURL, imageDescription, name, sex, age, breed, story } = req.body;
