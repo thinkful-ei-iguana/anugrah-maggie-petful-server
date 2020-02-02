@@ -25,7 +25,7 @@ class HumansRouter {
           name: name,
           ip: req.ip
         };
-        console.log('newhuman is', newHuman.name);
+        console.log('newhuman is', newHuman.name, newHuman.ip);
 
         let currentLineToAdopt = this.humansService.postHuman(newHuman);
         console.log('current line to adopt', currentLineToAdopt);
