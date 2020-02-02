@@ -29,7 +29,8 @@ app.use(session({
   secret: 'mattocat'
 }));
 app.get('/api/updateEvent', (req, res) => {
-  let ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
+  // let ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
+  let ip = req.ip;
   console.log('got request from: ', req.session.id);
   req.connection.on('close', () => {
     listOfClients.delete(ip);
