@@ -31,6 +31,9 @@ app.use(session({
 app.get('/api/updateEvent', (req, res) => {
   let ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
   console.log('got request from: ', req.session.id);
+  req.connection.on('close', () => {
+    listOfClients.delete(ip);
+  });
   if (listOfClients.has(ip)) {
     console.log('already have client');
   }
@@ -41,8 +44,7 @@ app.get('/api/updateEvent', (req, res) => {
       'Connection': 'keep-alive',
       'Cache-Control': 'no-cache'
     };
-    res
-      .writeHead(200, headers);
+    res.writeHead(200, headers);
     res.write(`data: ${JSON.stringify({
       humans: humansRouter.getService().getQueue().map(human => human.name),
       isItYourTurn: false

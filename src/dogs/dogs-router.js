@@ -18,7 +18,7 @@ class DogsRouter {
       .delete((req, res, next) => {
         return res
           .status(200)
-          .send(DogsService.deleteDog())
+          .send(DogsService.deleteDog());
         // .then(() => {
         //   if (this.adoptionCallback) {
         //     this.adoptionCallback();
