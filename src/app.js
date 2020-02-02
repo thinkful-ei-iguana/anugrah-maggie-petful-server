@@ -22,7 +22,7 @@ const morganSetting = process.env.NODE_ENV === 'production' ? 'tiny' : 'common';
 app.use(morgan(morganSetting));
 
 let listOfClients = new Map();
-
+let eventId = 0;
 app.use(compression());
 app.get('/api/updateEvent', (req, res) => {
   if (listOfClients.has(req.ip)) {
@@ -66,6 +66,7 @@ function adoptionLoopTick() {
     console.log('** LOOP TICK: found people in queue', humansRouter.getService().getQueue().length);
 
     let replyToClients = () => {
+      eventId++;
       // for (let [reqClient, response] of Object.entries(listOfClients)) {
       console.log('ip is', humansRouter.getService().getQueue()[0].ip);
       console.log("length of people queue:", humansRouter.getService().getQueue().length);
@@ -84,7 +85,8 @@ function adoptionLoopTick() {
 
         response.write(`data: ${JSON.stringify({
           humans: humansRouter.getService().getQueue().map(human => human.name),
-          isItYourTurn: isItYourTurn
+          isItYourTurn: isItYourTurn,
+          id: eventId
         })}\n\n`);
         response.flush();
       }
