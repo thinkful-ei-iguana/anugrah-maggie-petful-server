@@ -61,7 +61,7 @@ class DogsService {
 
   deleteDog() {
     let adoptedDog = this.dogQueue.dequeue();
-    this.dogQueue.enqueue(adoptedDog);
+    this.dogQueue.enqueue(adoptedDog); //add dog back into queue so that dog "stock" does not run out
     return adoptedDog;
   }
 

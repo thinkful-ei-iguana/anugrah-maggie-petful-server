@@ -33,7 +33,8 @@ app.get('/api/updateEvent', (req, res) => {
   let ip = req.ip;
   console.log('got request from: ', req.session.id);
   req.connection.on('close', () => {
-    console.log("closing connection for", ip)
+    console.log("closing connection for", ip);
+
     listOfClients.delete(ip);
   });
   if (listOfClients.has(ip)) {
@@ -118,6 +119,7 @@ function adoptionLoopTick() {
       // if person runs out of time
       // force person to end of the queue
       humansRouter.getService().deleteHuman();
+      dogsRouter.getService().deleteDog();
       replyToClients();
     }, 5000);
 
