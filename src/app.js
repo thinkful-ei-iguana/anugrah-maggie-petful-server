@@ -49,7 +49,8 @@ app.get('/api/updateEvent', (req, res) => {
     res.writeHead(200, headers);
     res.write(`data: ${JSON.stringify({
       humans: humansRouter.getService().getQueue().map(human => human.name),
-      isItYourTurn: false
+      isItYourTurn: false,
+      currentDog: dogsRouter.getService().deleteDog()
     })}\n\n`);
     res.flush();
     listOfClients.set(ip, {
@@ -109,8 +110,6 @@ function adoptionLoopTick() {
 
     let adoptedPet = () => {
       clearTimeout(adoptionTimeout);
-      dogsRouter.getService().deleteDog();
-
       replyToClients();
     };
 
