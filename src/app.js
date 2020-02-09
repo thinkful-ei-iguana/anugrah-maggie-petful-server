@@ -119,12 +119,12 @@ function adoptionLoopTick() {
       // if person runs out of time
       // force person to end of the queue
       humansRouter.getService().deleteHuman();
-      dogsRouter.getService().deleteDog();
       replyToClients();
     }, 5000);
 
     let adoptedPet = () => {
       clearTimeout(adoptionTimeout);
+      dogsRouter.getService().deleteDog();
       replyToClients();
     };
     // if person makes pet selection
