@@ -124,7 +124,6 @@ function adoptionLoopTick() {
 
     let adoptedPet = () => {
       clearTimeout(adoptionTimeout);
-      dogsRouter.getService().deleteDog();
       replyToClients();
     };
     // if person makes pet selection
@@ -137,6 +136,7 @@ function adoptionLoopTick() {
 
     dogsRouter.listenForAdoption(() => {
       console.log('*** LOOP TICK: user adopted dog');
+      dogsRouter.getService().deleteDog();
       adoptedPet();
     });
   })
