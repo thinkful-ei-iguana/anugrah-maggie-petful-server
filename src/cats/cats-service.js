@@ -59,7 +59,7 @@ const CatsService = {
 
   deleteCat() {
     let adoptedCat = catQueue.dequeue();
-    catQueue.enqueue(adoptedCat);
+    catQueue.enqueue(adoptedCat); // add cat back into queue so that cat "stock" does not run out
     return adoptedCat;
   },
   getCats() {

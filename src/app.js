@@ -29,11 +29,10 @@ app.use(session({
   secret: 'mattocat'
 }));
 app.get('/api/updateEvent', (req, res) => {
-  // let ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
   let ip = req.ip;
   console.log('got request from: ', req.session.id);
   req.connection.on('close', () => {
-    console.log("closing connection for", ip);
+    console.log('closing connection for', ip);
 
     listOfClients.delete(ip);
   });
@@ -58,15 +57,6 @@ app.get('/api/updateEvent', (req, res) => {
       req: req
     });
   }
-  // setInterval(() => {
-  //   res
-  //     // OMG OMG IT NEEDS:
-  //     // * 'data: ' to precede ANYTHING ELSE
-  //     // * '\n\n' needs to succeed EVERYTHING
-  //     //.write(`data: hello world ${Date.now()}\n\n`);
-  //     .write(`data: ${JSON.stringify(humansRouter.getService().getQueue())}\n\n`);
-  //   res.flush();
-  // }, 2000);
 });
 
 app.use('/api/cats', catsRouter.getRouter());
@@ -76,15 +66,10 @@ app.use('/api/humans', humansRouter.getRouter());
 function adoptionLoopTick() {
 
   let promiseLoop = new Promise((resolve) => {
-    // console.log('* LOOP TICK: running the loop');
-    // console.log('** LOOP TICK: found people in queue', humansRouter.getService().getQueue().length);
 
     let replyToClients = () => {
       eventId++;
-      // for (let [reqClient, response] of Object.entries(listOfClients)) {
-      // console.log('ip is', humansRouter.getService().getQueue()[0].ip);
-      // console.log('length of people queue:', humansRouter.getService().getQueue().length);
-      // console.log('list of clients:', listOfClients.size);
+
       console.log(dogsRouter.getService().getDogs()[0].name);
       for (let element of listOfClients.entries()) {
         let reqIp = element[0];
@@ -92,14 +77,14 @@ function adoptionLoopTick() {
         let response = resAndReq.res;
         let isItYourTurn = false;
         let currentAdopter = humansRouter.getService().getHumans()[0].name;
-        // console.log('here is', humansRouter.getService().getQueue()[0].ip);
-        // console.log('reqclient is', reqClient);
+
         if (humansRouter.getService().getQueue().length > 0 &&
           reqIp === humansRouter.getService().getQueue()[0].ip) {
           isItYourTurn = true;
         }
-        // console.log('reply to client', humansRouter.getService().getQueue());
-
+        //     // THE CODE BELOW NEEDS:
+        //     // * 'data: ' to precede ANYTHING ELSE
+        //     // * '\n\n' needs to succeed EVERYTHING
         response.write(`data: ${JSON.stringify({
           humans: humansRouter.getService().getQueue().map(human => human.name),
           isItYourTurn: isItYourTurn,
@@ -119,14 +104,17 @@ function adoptionLoopTick() {
       // if person runs out of time
       // force person to end of the queue
       humansRouter.getService().deleteHuman();
+      dogsRouter.getService().deleteDog();
       replyToClients();
     }, 5000);
 
     let adoptedPet = () => {
       clearTimeout(adoptionTimeout);
+      dogsRouter.getService().deleteDog();
+
       replyToClients();
     };
-    // if person makes pet selection
+
     // dequeue pet, dequeue human
     // re-enqueue pet, re-enqueue human
     catsRouter.listenForAdoption(() => {
@@ -136,7 +124,6 @@ function adoptionLoopTick() {
 
     dogsRouter.listenForAdoption(() => {
       console.log('*** LOOP TICK: user adopted dog');
-      dogsRouter.getService().deleteDog();
       adoptedPet();
     });
   })

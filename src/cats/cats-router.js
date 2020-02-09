@@ -15,16 +15,6 @@ class CatsRouter {
         return res
           .json(allCats);
       })
-      // .post(jsonParser, (req, res, next) => {
-      //   const { imageURL, imageDescription, name, sex, age, breed, story } = req.body;
-      //   const newCat = { imageURL, imageDescription, name, sex, age, breed, story };
-
-      //   return res
-      //     .status(201)
-      //     .json(serializeCat())
-
-
-      // })
       .delete((req, res, next) => {
         if (this.adoptionCallback) {
           this.adoptionCallback();
@@ -32,12 +22,17 @@ class CatsRouter {
         return res
           .status(200)
           .send(CatsService.deleteCat());
-        // .then(() => {
-        //   if (this.adoptionCallback) {
-        //     this.adoptionCallback();
-        //   }
-        // });
       });
+    // .post(jsonParser, (req, res, next) => {
+    //   const { imageURL, imageDescription, name, sex, age, breed, story } = req.body;
+    //   const newCat = { imageURL, imageDescription, name, sex, age, breed, story };
+
+    //   return res
+    //     .status(201)
+    //     .json(serializeCat())
+
+
+    // })
   }
 
   getRouter() {
