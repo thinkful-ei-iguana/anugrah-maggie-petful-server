@@ -32,7 +32,7 @@ app.get('/api/updateEvent', (req, res) => {
   let ip = req.ip;
   console.log('got request from: ', req.session.id);
   req.connection.on('close', () => {
-    console.log('closing connection for', ip);
+    console.log("closing connection for", ip);
 
     listOfClients.delete(ip);
   });
@@ -49,7 +49,7 @@ app.get('/api/updateEvent', (req, res) => {
     res.writeHead(200, headers);
     res.write(`data: ${JSON.stringify({
       humans: humansRouter.getService().getQueue().map(human => human.name),
-      isItYourTurn: false,
+      isItYourTurn: false
     })}\n\n`);
     res.flush();
     listOfClients.set(ip, {
@@ -57,6 +57,7 @@ app.get('/api/updateEvent', (req, res) => {
       req: req
     });
   }
+
 });
 
 app.use('/api/cats', catsRouter.getRouter());
@@ -76,8 +77,10 @@ function adoptionLoopTick() {
         let resAndReq = element[1];
         let response = resAndReq.res;
         let isItYourTurn = false;
-        let currentAdopter = humansRouter.getService().getHumans()[0].name;
-
+        let currentAdopter = humansRouter.getService().getHumans()[humansRouter.getService().getHumans().length - 1].name;
+        let randomPetArr = [dogsRouter.getService().getDogs()[0]];
+        let adoptedPet = randomPetArr[Math.floor(Math.random() * randomPetArr.length)];
+        console.log('woooww', dogsRouter.getService().deleteDog());
         if (humansRouter.getService().getQueue().length > 0 &&
           reqIp === humansRouter.getService().getQueue()[0].ip) {
           isItYourTurn = true;
@@ -91,6 +94,7 @@ function adoptionLoopTick() {
           id: eventId,
           currentAdopter: currentAdopter,
           adoptedPet: adoptedPet
+
         })}\n\n`);
         response.flush();
       }
@@ -121,6 +125,7 @@ function adoptionLoopTick() {
 
     dogsRouter.listenForAdoption(() => {
       console.log('*** LOOP TICK: user adopted dog');
+      dogsRouter.getService().deleteDog();
       adoptedPet();
     });
   })
