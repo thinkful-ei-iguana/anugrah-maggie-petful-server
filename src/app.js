@@ -50,7 +50,6 @@ app.get('/api/updateEvent', (req, res) => {
     res.write(`data: ${JSON.stringify({
       humans: humansRouter.getService().getQueue().map(human => human.name),
       isItYourTurn: false,
-      currentDog: dogsRouter.getService().deleteDog()
     })}\n\n`);
     res.flush();
     listOfClients.set(ip, {
