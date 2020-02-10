@@ -8,6 +8,7 @@ class DogsRouter {
     this.dogsRouter = express.Router();
     this.jsonParser = express.json();
 
+    let deletedDog = null;
     this.dogsRouter
       .route('/')
       .get((req, res) => {
@@ -17,11 +18,11 @@ class DogsRouter {
       })
       .delete((req, res, next) => {
         if (this.adoptionCallback) {
-          this.adoptionCallback();
+          deletedDog = this.adoptionCallback();
         }
         return res
           .status(200)
-          .send(this.dogsService.deleteDog());
+          .send(JSON.stringify(deletedDog));
       });
     // .post(jsonParser, (req, res, next) => {
     //   const { imageURL, imageDescription, name, sex, age, breed, story } = req.body;

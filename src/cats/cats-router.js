@@ -17,12 +17,16 @@ class CatsRouter {
           .json(allCats);
       })
       .delete((req, res, next) => {
-        if (this.adoptionCallback) {
-          this.adoptionCallback();
-        }
+
+        let deletedCat = null;
         return res
+          .then(() => {
+            if (this.adoptionCallback) {
+              deletedCat = this.adoptionCallback();
+            }
+          })
           .status(200)
-          .send(this.catsService.deleteCat());
+          .send(JSON.stringify(deletedCat));
       });
     // .post(jsonParser, (req, res, next) => {
     //   const { imageURL, imageDescription, name, sex, age, breed, story } = req.body;

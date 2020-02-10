@@ -68,7 +68,18 @@ function adoptionLoopTick() {
 
   let promiseLoop = new Promise((resolve) => {
 
-    let replyToClients = () => {
+    let replyToClients = (adoptedPet) => {
+      let currentHuman = humansRouter.getService().deleteHuman();
+
+      // if there's no adopted pet and it's a dummy user, assign a random pet
+      if (!adoptedPet && !currentHuman.ip) {
+        if (Math.random() < .5) {
+          adoptedPet = dogsRouter.getService().deleteDog();
+        }
+        else {
+          adoptedPet = catsRouter.getService().deleteCat();
+        }
+      }
       eventId++;
 
       console.log(dogsRouter.getService().getDogs()[0].name);
@@ -77,10 +88,8 @@ function adoptionLoopTick() {
         let resAndReq = element[1];
         let response = resAndReq.res;
         let isItYourTurn = false;
-        let currentAdopter = humansRouter.getService().getHumans()[humansRouter.getService().getHumans().length - 1].name;
-        let randomPetArr = [dogsRouter.getService().getDogs()[0]];
-        let adoptedPet = randomPetArr[Math.floor(Math.random() * randomPetArr.length)];
-        console.log('woooww', dogsRouter.getService().deleteDog());
+
+        console.log('math random is', adoptedPet);
         if (humansRouter.getService().getQueue().length > 0 &&
           reqIp === humansRouter.getService().getQueue()[0].ip) {
           isItYourTurn = true;
@@ -88,14 +97,16 @@ function adoptionLoopTick() {
         //     // THE CODE BELOW NEEDS:
         //     // * 'data: ' to precede ANYTHING ELSE
         //     // * '\n\n' needs to succeed EVERYTHING
-        response.write(`data: ${JSON.stringify({
+        let responseObj = {
           humans: humansRouter.getService().getQueue().map(human => human.name),
           isItYourTurn: isItYourTurn,
           id: eventId,
-          currentAdopter: currentAdopter,
-          adoptedPet: adoptedPet
-
-        })}\n\n`);
+          currentAdopter: currentHuman.name,
+          adoptedPet: adoptedPet,
+          currentCat: catsRouter.getService().getCats()[0],
+          currentDog: dogsRouter.getService().getDogs()[0]
+        };
+        response.write(`data: ${JSON.stringify(responseObj)}\n\n`);
         response.flush();
       }
 
@@ -107,26 +118,28 @@ function adoptionLoopTick() {
       console.log('*** LOOP TICK: adoption timeout');
       // if person runs out of time
       // force person to end of the queue
-      humansRouter.getService().deleteHuman();
-      replyToClients();
+      replyToClients(null);
     }, 5000);
 
-    let adoptedPet = () => {
+    let adoptedPet = (adoptedPet) => {
       clearTimeout(adoptionTimeout);
-      replyToClients();
+      replyToClients(adoptedPet);
     };
 
     // dequeue pet, dequeue human
     // re-enqueue pet, re-enqueue human
     catsRouter.listenForAdoption(() => {
       console.log('*** LOOP TICK: user adopted cat');
-      adoptedPet();
+      let adoptedCat = catsRouter.getService().deleteCat();
+      adoptedPet(adoptedCat);
+      return adoptedCat;
     });
 
     dogsRouter.listenForAdoption(() => {
       console.log('*** LOOP TICK: user adopted dog');
-      dogsRouter.getService().deleteDog();
-      adoptedPet();
+      let adoptedDog = dogsRouter.getService().deleteDog();
+      adoptedPet(adoptedDog);
+      return adoptedDog;
     });
   })
     .then(() => {
