@@ -49,7 +49,9 @@ app.get('/api/updateEvent', (req, res) => {
     res.writeHead(200, headers);
     res.write(`data: ${JSON.stringify({
       humans: humansRouter.getService().getQueue().map(human => human.name),
-      isItYourTurn: false
+      isItYourTurn: false,
+      currentCat: catsRouter.getService().getCats()[0],
+      currentDog: dogsRouter.getService().getDogs()[0]
     })}\n\n`);
     res.flush();
     listOfClients.set(ip, {
@@ -69,6 +71,7 @@ function adoptionLoopTick() {
   let promiseLoop = new Promise((resolve) => {
 
     let replyToClients = (adoptedPet) => {
+      console.log("reply to clients", listOfClients.size);
       let currentHuman = humansRouter.getService().deleteHuman();
 
       // if there's no adopted pet and it's a dummy user, assign a random pet

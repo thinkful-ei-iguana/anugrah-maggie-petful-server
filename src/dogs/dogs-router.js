@@ -8,7 +8,6 @@ class DogsRouter {
     this.dogsRouter = express.Router();
     this.jsonParser = express.json();
 
-    let deletedDog = null;
     this.dogsRouter
       .route('/')
       .get((req, res) => {
@@ -17,6 +16,7 @@ class DogsRouter {
           .json(allDogs);
       })
       .delete((req, res, next) => {
+        let deletedDog = null;
         if (this.adoptionCallback) {
           deletedDog = this.adoptionCallback();
         }

@@ -19,12 +19,10 @@ class CatsRouter {
       .delete((req, res, next) => {
 
         let deletedCat = null;
+        if (this.adoptionCallback) {
+          deletedCat = this.adoptionCallback();
+        }
         return res
-          .then(() => {
-            if (this.adoptionCallback) {
-              deletedCat = this.adoptionCallback();
-            }
-          })
           .status(200)
           .send(JSON.stringify(deletedCat));
       });
